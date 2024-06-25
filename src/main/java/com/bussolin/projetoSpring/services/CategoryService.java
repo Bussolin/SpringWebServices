@@ -22,8 +22,8 @@ public class CategoryService {
 	}
 	
 	public Category findById( Integer id ) {
-		Optional<Category> Category = CategoryRepository.findById(id);
-		return Category.get();
+		Optional<Category> category = CategoryRepository.findById(id);
+		return category.get();
 	}
 	
 }
