@@ -1,6 +1,8 @@
 package com.bussolin.projetoSpring.config;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.context.annotation.Profile;
 import com.bussolin.projetoSpring.entities.Category;
 import com.bussolin.projetoSpring.entities.Order;
 import com.bussolin.projetoSpring.entities.OrderItem;
+import com.bussolin.projetoSpring.entities.Payment;
 import com.bussolin.projetoSpring.entities.Product;
 import com.bussolin.projetoSpring.entities.User;
 import com.bussolin.projetoSpring.entities.enums.OrderStatus;
@@ -77,6 +80,10 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
 	
 		orderItemRepository.saveAll( Arrays.asList( oi1,oi2,oi3));
+		
+		Payment pay = new Payment( null,Instant.now().plus( 4L, ChronoUnit.HOURS ), o1 );
+		o1.setPayment(pay);
+		orderRepository.save(o1);
 	}
 	
 	
