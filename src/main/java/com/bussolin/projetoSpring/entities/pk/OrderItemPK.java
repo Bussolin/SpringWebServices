@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import com.bussolin.projetoSpring.entities.Order;
 import com.bussolin.projetoSpring.entities.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
@@ -29,6 +30,7 @@ public class OrderItemPK implements Serializable {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
+
 	public Product getProduct() {
 		return product;
 	}
