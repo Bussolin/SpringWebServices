@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.bussolin.projetoSpring.entities.User;
 import com.bussolin.projetoSpring.repositories.UserRepository;
+import com.bussolin.projetoSpring.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -23,7 +24,7 @@ public class UserService {
 	
 	public User findById( Integer id ) {
 		Optional<User> user = userRepository.findById(id);
-		return user.get();
+		return user.orElseThrow(() -> new ResourceNotFoundException(id)  );
 	}
 	
 	public User insert( User user ) {
