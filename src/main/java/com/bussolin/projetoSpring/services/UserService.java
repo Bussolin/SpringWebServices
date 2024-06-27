@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.bussolin.projetoSpring.entities.User;
 import com.bussolin.projetoSpring.repositories.UserRepository;
+import com.bussolin.projetoSpring.services.exceptions.DataBaseException;
 import com.bussolin.projetoSpring.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -32,7 +35,13 @@ public class UserService {
 	}
 	
 	public void delete( Integer id ) {
-		userRepository.deleteById( id );
+		try {
+			userRepository.deleteById( id );
+		}catch( EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException( id );
+		}catch( DataIntegrityViolationException e ) {
+			throw new DataBaseException( e.getMessage() );
+		}
 	}
 	
 	public User update( Integer id, User obj ) {
