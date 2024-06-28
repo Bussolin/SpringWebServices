@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.bussolin.projetoSpring.services.exceptions.DataBaseException;
+import com.bussolin.projetoSpring.services.exceptions.NoContentException;
 import com.bussolin.projetoSpring.services.exceptions.ResourceNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
-	
 	@ExceptionHandler( ResourceNotFoundException.class )
 	public ResponseEntity<StandartError> resourceNotFoundException( ResourceNotFoundException e, HttpServletRequest request ){
 		String error = "Resource not found";
@@ -28,6 +28,14 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandartError> dataBaseException( DataBaseException e, HttpServletRequest request ){
 		String error = "Database Error";
 		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandartError err = new StandartError( Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI() );
+		return ResponseEntity.status( status ).body( err );
+	}
+	
+	@ExceptionHandler( NoContentException.class )
+	public ResponseEntity<StandartError> noContentException( NoContentException e, HttpServletRequest request ){
+		String error = "No content found on specified path";
+		HttpStatus status = HttpStatus.NO_CONTENT;
 		StandartError err = new StandartError( Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI() );
 		return ResponseEntity.status( status ).body( err );
 	}

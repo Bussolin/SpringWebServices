@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.bussolin.projetoSpring.entities.User;
 import com.bussolin.projetoSpring.repositories.UserRepository;
 import com.bussolin.projetoSpring.services.exceptions.DataBaseException;
+import com.bussolin.projetoSpring.services.exceptions.NoContentException;
 import com.bussolin.projetoSpring.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -21,10 +22,13 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
-	@GetMapping
+
 	public List<User> findAll(){
-		return userRepository.findAll();
+		List<User> validateList = userRepository.findAll();
+		if( validateList.isEmpty() ) {
+			throw new NoContentException("No content found");
+		}
+		return validateList;
 	}
 	
 	public User findById( Integer id ) {
