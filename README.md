@@ -32,7 +32,7 @@ O projeto inclui os seguintes endpoints REST:
 
 Com 3 entidades (users, categories, products)
 
-GET /api/"entidade" - Lista todos os usuários
+GET /api/"entidade" - Lista todos os registros
 POST /api/"entidade" - Cria um novo registro
 GET /api/"entidade"/{id} - Obtém detalhes de um registro específico
 PUT /api/"entidade"/{id} - Atualiza um registro existente
@@ -85,7 +85,7 @@ DELETE /api/"entidade"/{id} - Remove um registro
   *Same as POST Method*
 
 
-Você pode testar os endpoints utilizando ferramentas como Postman ou cURL.
+Você pode testar os endpoints utilizando ferramentas como Postman ou cURL após compilar e rodas a aplicação do springboot em sua máquina utilizando http://localhost:8080/*request*.
 
 ###Considerações
 
